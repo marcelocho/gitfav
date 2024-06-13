@@ -39,7 +39,7 @@ header {
 }
 
 header .logo {
-    max-width: 18.6rem;
+    width: 18.6rem;
 }
 
 .logo img{
@@ -67,7 +67,7 @@ header .logo {
 
 .search input {
     height: 4.8rem;
-    width: 46rem;
+    width: 60%;
     border: none;
     background-color: var(--cor-box);
     border-radius: .5rem;
@@ -93,7 +93,7 @@ input::placeholder {
     border-radius: .5rem;
     height: 4.8rem;
     border: none;
-    width: 17rem;
+    width: fit-content;
     
     color: white;
     padding: 1.2rem 3.2rem;
@@ -112,10 +112,12 @@ table {
     font-size: 2rem;
     font-weight: bold;
     width: 100%;
+    
     border-collapse: collapse;
     color: var(--cor-texto);
-    border: 1px solid var(--cor-linha);
+    
     border-radius: 1.2rem;
+    overflow: hidden;
 }
 
 thead {
@@ -165,26 +167,21 @@ tr button {
     cursor: pointer
 }
 
-.vazio {
-    display: none;
-}
-
-.vazio p {
-    font-size: 4rem;
+.vazio span {
+    font-size: 3rem;
     font-weight: bold;
     color: var(--cor-favorito);
-    display: inline-block;
-    margin-left: 6rem;    
+    margin-left: 2rem;    
 }
 
-.vazio td {
+.vazio{
    padding: 15rem 20rem;
 }
 
 .vazio img {
     border-radius: 0;
-    width: 13.2rem;
-    height: 12.5rem;
+    width: 10rem;
+    height: 9.4rem;
 }
 
 

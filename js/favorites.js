@@ -20,7 +20,7 @@ export class Favorites {
     }
 
     load() {
-        this.entries = JSON.parse(localStorage.getItem(`@github-favorites:`)) || []
+        this.entries = JSON.parse(localStorage.getItem(`@github-favorites:`))
     }
 
     save() {
@@ -50,6 +50,7 @@ export class Favorites {
         catch (error) {
             alert(error.message)
         }
+        
     }
 
     delete(user) {
@@ -67,29 +68,99 @@ export class FavoritesView extends Favorites {
     constructor(root) {
         super(root)
 
-        this.tbody = this.root.queryselector('table tbody')
+        this.tbody = this.root.querySelector('table tbody')
 
         this.update()
         this.onadd()
     }
 
     onadd() {
-        const addButton = this.root.querySelector(".search button")
+        const addButton = this.root.querySelector('.search button')
         addButton.onclick = () => {
+
             const { value } = this.root.querySelector('.search input')
 
             this.add(value)
         }
     }
+    
 
     update() {
+        
+
+        if(this.entries.length !== 0) {
         this.removeAllTr()
 
         this.entries.forEach( user => {
-            
+            const row = this.createRow()
+
+            row.querySelector('.user img').src = `https://github.com/${user.login}.png`
+            row.querySelector('.user img').alt = `Imagem de ${user.name}`
+            row.querySelector('.user a').href = `https://github.com/${user.login}`
+            row.querySelector('.user p').textContent = user.name
+            row.querySelector('.user span').textContent = `/${user.login}`
+            row.querySelector('.repositories').textContent = user.public_repos
+            row.querySelector('.followers').textContent = user.followers
+
+            row.querySelector('.remove').onclick = () => {
+                const isOk = confirm('Tem certeza que deseja excluir esse favorito?')
+                if(isOk) {
+                    this.delete(user)
+                }
+            }
+            this.tbody.append(row)
+           
         })
+}
+    else {
+        this.removeAllTr ()
+
+        const rowVazio = this.createVazio ()
+
+        this.tbody.append(rowVazio)
+    }
     }
 
+    createRow() {
+        const tr = document.createElement('tr')
 
+        tr.innerHTML = `
+        <td class="user">
+              <img src="https://github.com/maykbrito.png" alt="Imagem de maykbrito">
+              <a href="https://github.com/maykbrito" target="_blank">
+                <p>Mayk Brito</p>
+                <span>/maykbrito</span>
+              </a>
+            </td>
+            <td class="repositories">
+              76
+            </td>
+            <td class="followers">
+              9589
+            </td>
+            <td>
+              <button class="remove">Remover</button>
+            </td>`
+        return tr  
+    }
 
+    createVazio() {
+        const sumir = document.createElement('tr')
+        
+        sumir.innerHTML = `
+            <td colspan="4" class="vazio">
+              <img src="/img/Estrela.svg" alt="">
+            <span>Nenhum favorito ainda</span>
+          </td>`
+   
+     return sumir
+    }
+    
+    removeAllTr() {
+        this.tbody.querySelectorAll('tr')
+        .forEach((tr) => {
+            tr.remove()
+        }) 
+    }
+    
 }
